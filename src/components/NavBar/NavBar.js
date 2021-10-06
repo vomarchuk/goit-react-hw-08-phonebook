@@ -1,7 +1,15 @@
+import { NavLink } from 'react-router-dom';
 import s from './NavBar.module.css';
 
 const NavBar = ({ children }) => {
-  return <div className={s.nav_bar}>nav bar{children}</div>;
+  return (
+    <nav className={s.nav_bar}>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/contacts">Contacts</NavLink>
+      <NavLink to="/login">Login</NavLink>
+      <NavLink to="/register">Register</NavLink>
+    </nav>
+  );
 };
 
 export default NavBar;
