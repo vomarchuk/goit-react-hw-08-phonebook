@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router';
 // import { getItemslength } from '../../redux/contacts/contacts-selectors';
 // import { fetchContacts } from '../../redux/contacts/contacts-operations';
 
-import s from './App.module.css';
+// import s from './App.module.css';
 import Section from '../Section';
 import NavBar from '../NavBar';
 

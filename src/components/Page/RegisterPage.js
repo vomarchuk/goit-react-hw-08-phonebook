@@ -1,26 +1,29 @@
 import { useForm } from 'react-hook-form';
-
+import { useDispatch } from 'react-redux';
+import { userRegister } from '../../redux/auth/auth-operations';
 const RegisterPage = () => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = data => console.log(data);
 
-  // console.dir(useForm);
+  const onSubmit = data => {
+    dispatch(userRegister(data));
+    reset();
+  };
+
   return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
-      <input placeholder="e-mail" {...register('login', { required: true })} />
-      {/* include validation with required or other standard HTML validation rules */}
+      <input placeholder="name" {...register('name', { required: true })} />
+      <input placeholder="e-mail" {...register('email', { required: true })} />
       <input
+        autoComplete="off"
         placeholder="password"
         {...register('password', { required: true })}
       />
-      {/* errors will return when field validation fails  */}
       {errors.password && <span>This field is required</span>}
 
       <input type="submit" />

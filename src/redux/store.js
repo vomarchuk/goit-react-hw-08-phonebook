@@ -9,9 +9,10 @@ import {
 } from 'redux-persist';
 
 import contactReducer from './contacts/contacts-reducer';
-
+import autSlice from './auth/auth-slice';
 const store = configureStore({
   reducer: {
+    auth: autSlice,
     contacts: contactReducer,
   },
   middleware: getDefaultMiddleware({
