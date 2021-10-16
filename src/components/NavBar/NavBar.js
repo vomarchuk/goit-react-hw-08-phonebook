@@ -1,24 +1,19 @@
-import { NavLink } from 'react-router-dom';
 import s from './NavBar.module.css';
 
-const NavBar = ({ children }) => {
+import { useSelector } from 'react-redux';
+import authSelectors from '../../redux/auth/auth-selectors';
+
+import AuthNav from '../AuthNav';
+import UserMenu from '../UserMenu';
+import Navigations from '../Navigations';
+
+const NavBar = () => {
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedId);
   return (
-    <nav className={s.nav_bar}>
-      <ul className={s.nav_list}>
-        <li className={s.page_items}>
-          <NavLink to="/" className={s.page_item}>
-            Home
-          </NavLink>
-          <NavLink to="/contacts" className={s.page_item}>
-            Contacts
-          </NavLink>
-        </li>
-        <li className={s.login_items}>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
-        </li>
-      </ul>
-    </nav>
+    <header className={s.nav_bar}>
+      <Navigations />
+      {isLoggedIn ? <UserMenu /> : <AuthNav />}
+    </header>
   );
 };
 

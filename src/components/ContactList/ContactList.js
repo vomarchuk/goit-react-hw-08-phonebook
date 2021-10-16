@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeContact } from '../../redux/contacts/contacts-operations';
+import {
+  getAllContacts,
+  removeContact,
+} from '../../redux/contacts/contacts-operations';
 import { getFilteredContacts } from '../../redux/contacts/contacts-selectors';
 import s from './ContactList.module.css';
 
 const ContactList = () => {
   const contacts = useSelector(getFilteredContacts);
   const dispatch = useDispatch();
-
   return (
     <ul className={s.list}>
       {contacts.map(item => {

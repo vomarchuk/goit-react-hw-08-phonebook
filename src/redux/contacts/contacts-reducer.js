@@ -1,58 +1,60 @@
-import { combineReducers } from 'redux';
-import { createReducer } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import * as contactsOperations from './contacts-operations';
 
-import {
-  addContactsRequest,
-  addContactsSuccess,
-  addContactsError,
-  removeContactRequest,
-  removeContactSuccess,
-  removeContactError,
-  getContactsRequest,
-  getContactsSuccess,
-  getContactsError,
-  changeFilter,
-} from './contacts-action';
+const initialState = {
+  items: null,
+};
 
-const items = createReducer([], {
-  [getContactsSuccess]: (_, { payload }) => payload,
-  [addContactsSuccess]: (state, { payload }) => [...state, payload],
-  [removeContactSuccess]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload),
+const contactsSlice = createSlice({
+  name: 'contacts',
+  initialState,
+  extraReducers: {
+    [contactsOperations.getAllContacts.fulfilled](state, action) {
+      state.items = action.payload;
+    },
+  },
 });
 
-const isLoading = createReducer(false, {
-  [addContactsRequest]: () => true,
-  [addContactsSuccess]: () => false,
-  [addContactsError]: () => false,
+// const items = createReducer([], {
+//   [getContactsSuccess]: (_, { payload }) => payload,
+//   [addContactsSuccess]: (state, { payload }) => [...state, payload],
+//   [removeContactSuccess]: (state, { payload }) =>
+//     state.filter(({ id }) => id !== payload),
+// });
 
-  [removeContactRequest]: () => true,
-  [removeContactSuccess]: () => false,
-  [removeContactError]: () => false,
+// const isLoading = createReducer(false, {
+//   [addContactsRequest]: () => true,
+//   [addContactsSuccess]: () => false,
+//   [addContactsError]: () => false,
 
-  [getContactsRequest]: () => true,
-  [getContactsSuccess]: () => false,
-  [getContactsError]: () => false,
-});
+//   [removeContactRequest]: () => true,
+//   [removeContactSuccess]: () => false,
+//   [removeContactError]: () => false,
 
-const error = createReducer(null, {
-  [addContactsError]: (_, { payload }) => payload,
-  [addContactsRequest]: () => null,
+//   [getContactsRequest]: () => true,
+//   [getContactsSuccess]: () => false,
+//   [getContactsError]: () => false,
+// });
 
-  [removeContactError]: (_, { payload }) => payload,
-  [removeContactRequest]: () => null,
+// const error = createReducer(null, {
+//   [addContactsError]: (_, { payload }) => payload,
+//   [addContactsRequest]: () => null,
 
-  [getContactsError]: (_, { payload }) => payload,
-  [getContactsRequest]: () => null,
-});
+//   [removeContactError]: (_, { payload }) => payload,
+//   [removeContactRequest]: () => null,
 
-const filter = createReducer('', {
-  [changeFilter]: (_, { payload }) => payload,
-});
+//   [getContactsError]: (_, { payload }) => payload,
+//   [getContactsRequest]: () => null,
+// });
 
-export default combineReducers({
-  items,
-  filter,
-  isLoading,
-  error,
-});
+// const filter = createReducer('', {
+//   [changeFilter]: (_, { payload }) => payload,
+// });
+
+// export default combineReducers({
+//   items,
+//   filter,
+//   isLoading,
+//   error,
+// });
+export default contactsSlice.reducer;
