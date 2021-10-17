@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { changeFilter } from '../../redux/contacts/contacts-action';
+import contactsOperations from '../../redux/contacts/contacts-operations';
 import s from './Filter.module.css';
 
 const Filter = ({ value }) => {
   const dispatch = useDispatch();
-  const onChange = event => dispatch(changeFilter(event.target.value));
+  const onChange = event => {
+    dispatch(contactsOperations.filter(event.target.value));
+  };
   return (
     <label className={s.label}>
       Find contacts by name

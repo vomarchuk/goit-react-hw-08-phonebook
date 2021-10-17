@@ -1,11 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-import authSelectors from '../redux/auth/auth-selectors';
-
 const AuthNav = () => {
-  const isLoggedIn = useSelector(authSelectors.getIsLoggedId);
-
   return (
     <div>
       <NavLink to="/register">Register</NavLink>
@@ -13,4 +8,5 @@ const AuthNav = () => {
     </div>
   );
 };
+
 export default AuthNav;

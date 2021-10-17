@@ -8,7 +8,7 @@ import UserMenu from '../UserMenu';
 import Navigations from '../Navigations';
 
 const NavBar = () => {
-  const isLoggedIn = useSelector(authSelectors.getIsLoggedId);
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
   return (
     <header className={s.nav_bar}>
       <Navigations />

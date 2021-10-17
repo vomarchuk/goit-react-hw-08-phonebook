@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { logIn } from '../../redux/auth/auth-operations';
+import authOperations from '../../redux/auth/auth-operations';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -13,16 +13,24 @@ const LoginPage = () => {
   } = useForm();
 
   const onSubmit = data => {
-    dispatch(logIn(data));
+    dispatch(authOperations.logIn(data));
     reset();
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input placeholder="e-mail" {...register('email', { required: true })} />
       <input
+        placeholder="e-mail"
+        {...register('email', {
+          required: true,
+        })}
+      />
+      <input
+        type="password"
         autoComplete="off"
         placeholder="password"
-        {...register('password', { required: true })}
+        {...register('password', {
+          required: true,
+        })}
       />
       {errors.password && <span>This field is required</span>}
 

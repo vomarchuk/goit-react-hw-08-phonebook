@@ -1,19 +1,13 @@
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  addContact,
-  getAllContacts,
-} from '../../redux/contacts/contacts-operations';
-
-// import { getItems } from '../../redux/contacts/contacts-selectors';
+import { useDispatch } from 'react-redux';
+import contactsOperations from '../../redux/contacts/contacts-operations';
 
 import s from './ContactForm.module.css';
-
-// import Label from '../Label';
 import options from '../options';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
+
   const { name, number } = options;
   const {
     register,
@@ -23,8 +17,7 @@ const ContactForm = () => {
   } = useForm();
 
   const onSubmit = data => {
-    dispatch(addContact(data));
-    console.log(data);
+    dispatch(contactsOperations.addContact(data));
     reset();
   };
 
@@ -47,7 +40,10 @@ const ContactForm = () => {
       />
       <input type="submit" className={s.button} />
 
-      <button onClick={() => dispatch(getAllContacts())} type="button">
+      <button
+        onClick={() => dispatch(contactsOperations.getAllContacts())}
+        type="button"
+      >
         cont
       </button>
     </form>

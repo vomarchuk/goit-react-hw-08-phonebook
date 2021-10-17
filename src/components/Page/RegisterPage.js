@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { userRegister } from '../../redux/auth/auth-operations';
+import authOperations from '../../redux/auth/auth-operations';
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const {
@@ -11,7 +11,7 @@ const RegisterPage = () => {
   } = useForm();
 
   const onSubmit = data => {
-    dispatch(userRegister(data));
+    dispatch(authOperations.userRegister(data));
     reset();
   };
 

@@ -1,66 +1,65 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import * as authOperations from './auth-operations';
-
+import authOperations from './auth-operations';
 const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
   error: null,
+  isFechingCurrent: false,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: {
-    [authOperations.userRegister.fulfilled](state, action) {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+    [authOperations.fetchCurrentUser.pending](state, action) {
+      state.isFechingCurrent = true;
+    },
+    [authOperations.fetchCurrentUser.fulfilled](state, { payload }) {
+      state.user = payload;
+      state.isLoggedIn = true;
+      state.isFechingCurrent = false;
       state.error = null;
     },
+    [authOperations.fetchCurrentUser.rejected](state, { error }) {
+      state.isLoggedIn = false;
+      state.isFechingCurrent = false;
+      state.error = error?.message;
+    },
 
-    [authOperations.logIn.fulfilled](state, action) {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+    [authOperations.userRegister.fulfilled](state, { payload }) {
+      state.user = payload.user;
+      state.token = payload.token;
       state.isLoggedIn = true;
       state.error = null;
     },
-    [authOperations.logOut.rejected](state, action) {
-      state.error = action?.error?.message;
+    [authOperations.userRegister.rejected](state, { error }) {
+      state.isLoggedIn = false;
+      state.error = error?.message;
     },
+
+    [authOperations.logIn.fulfilled](state, { payload }) {
+      state.user = payload.user;
+      state.token = payload.token;
+      state.isLoggedIn = true;
+      state.error = null;
+    },
+    [authOperations.logIn.rejected](state, { error }) {
+      state.isLoggedIn = false;
+      state.error = error?.message;
+    },
+
     [authOperations.logOut.fulfilled](state, action) {
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
       state.error = null;
     },
-
-    [authOperations.logIn.rejected](state, action) {
-      state.isLoggedIn = false;
-      state.error = action?.error?.message;
+    [authOperations.logOut.rejected](state, { error }) {
+      state.error = error?.message;
     },
   },
 });
-
-// const user = createReducer(initialState, {
-//   [registerSuccess]: (state, { payload }) => [state, ...payload],
-// });
-
-// const isLoggedIn = createReducer(false, {
-//   [registerSuccess]: () => true,
-//   [registerRequest]: () => false,
-//   [registerError]: () => false,
-// });
-
-// const error = createReducer(null, {
-//   [registerError]: (_, { payload }) => payload,
-//   [registerRequest]: () => null,
-// });
-
-// export default combineReducers({
-//   user,
-//   isLoggedIn,
-//   error,
-// });
 
 export default authSlice.reducer;

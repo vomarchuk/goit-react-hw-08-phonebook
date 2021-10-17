@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
-
 const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -12,12 +10,18 @@ const token = {
   },
 };
 
-export const userRegister = createAsyncThunk(
-  'auth/register',
-  async credentails => {
+const fetchCurrentUser = createAsyncThunk(
+  '/auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persisterToken = state.auth.token;
+    if (persisterToken === null) {
+      return thunkAPI.rejectedWithValue();
+      // return state;
+    }
+    token.set(persisterToken);
     try {
-      const { data } = await axios.post('/users/signup', credentails);
-      token.set(data.token);
+      const { data } = await axios.get('/users/current');
       return data;
     } catch (error) {
       throw error;
@@ -25,7 +29,16 @@ export const userRegister = createAsyncThunk(
   },
 );
 
-export const logIn = createAsyncThunk('auth/login', async credentails => {
+const userRegister = createAsyncThunk('auth/register', async credentails => {
+  try {
+    const { data } = await axios.post('/users/signup', credentails);
+    token.set(data.token);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+});
+const logIn = createAsyncThunk('auth/login', async credentails => {
   try {
     const { data } = await axios.post('/users/login', credentails);
     token.set(data.token);
@@ -35,7 +48,7 @@ export const logIn = createAsyncThunk('auth/login', async credentails => {
   }
 });
 
-export const logOut = createAsyncThunk('auth/logout', async () => {
+const logOut = createAsyncThunk('auth/logout', async () => {
   try {
     await axios.post('/users/logout');
     token.unset();
@@ -43,3 +56,11 @@ export const logOut = createAsyncThunk('auth/logout', async () => {
     throw error;
   }
 });
+
+const authOperations = {
+  userRegister,
+  logIn,
+  logOut,
+  fetchCurrentUser,
+};
+export default authOperations;
