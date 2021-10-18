@@ -10,24 +10,16 @@ import Section from '../Section';
 import NavBar from '../NavBar';
 import authOperations from '../../redux/auth/auth-operations';
 import authSelectors from '../../redux/auth/auth-selectors';
-// import contactsOperations from '../../redux/contacts/contacts-operations';
-// import authSelectors from '../../redux/auth/auth-selectors';
 
-//Page
 const HomePage = lazy(() => import('../Page/HomePage'));
 const LoginPage = lazy(() => import('../Page/LoginPage'));
 const RegisterPage = lazy(() => import('../Page/RegisterPage'));
 const ContactsPage = lazy(() => import('../Page/ContactsPage'));
-// //
-
-// import { getFilteredContacts } from '../../redux/contacts/contacts-selectors';
 
 const App = () => {
   const isFechingCurrent = useSelector(authSelectors.getIsFechingCurrent);
   const dispatch = useDispatch();
 
-  // const items = useSelector(getFilteredContacts);
-  // console.log('items:', items);
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
   }, [dispatch]);
@@ -53,7 +45,7 @@ const App = () => {
                 <LoginPage />
               </PublicRoute>
 
-              <PrivateRoute path="/contacts" redirectTo="/login">
+              <PrivateRoute path="/contacts" redirectTo="/">
                 <ContactsPage />
               </PrivateRoute>
             </Switch>

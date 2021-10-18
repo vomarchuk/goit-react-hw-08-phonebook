@@ -1,21 +1,17 @@
-import { useSelector } from 'react-redux';
-import contactSelectors from '../../redux/contacts/contacts-selectors';
-import ContactForm from '../ContactForm';
 import ContactList from '../ContactList';
 import Filter from '../Filter';
+import ModalSAddContact from '../Modal/Modal';
 
+import s from './Pages.module.css';
 const ContactsPage = () => {
-  const contacts = useSelector(contactSelectors.getItems);
-
   return (
-    <>
-      <h1>Phonebook</h1>
-      <ContactForm />
+    <div className={s.contactsPage}>
+      <h1 className={s.title}>Phonebook</h1>
+      <ModalSAddContact />
 
-      <h2>Contacts</h2>
       <Filter />
       <ContactList />
-    </>
+    </div>
   );
 };
 

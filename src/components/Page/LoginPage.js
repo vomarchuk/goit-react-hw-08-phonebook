@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import authOperations from '../../redux/auth/auth-operations';
-
+import { Button } from 'react-bootstrap';
+import logInIcon from '../../images/login.svg';
+import s from './Pages.module.css';
 const LoginPage = () => {
   const dispatch = useDispatch();
 
@@ -17,14 +19,16 @@ const LoginPage = () => {
     reset();
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
       <input
+        className={s.input}
         placeholder="e-mail"
         {...register('email', {
           required: true,
         })}
       />
       <input
+        className={s.input}
         type="password"
         autoComplete="off"
         placeholder="password"
@@ -33,8 +37,10 @@ const LoginPage = () => {
         })}
       />
       {errors.password && <span>This field is required</span>}
-
-      <input type="submit" />
+      <Button className={s.btn_user} variant="success" type="submit">
+        Log In
+        <img className={s.icon} src={logInIcon} alt="login button" />
+      </Button>
     </form>
   );
 };
