@@ -33,6 +33,13 @@
   margin-top: 20px;
 }
 
+.notification--error {
+  color: #bf1650;
+}
+.notification--error::before {
+  content: '⚠ ';
+}
+
 .btn_user {
   display: flex;
   align-items: center;

@@ -33,8 +33,12 @@ const userRegister = createAsyncThunk('auth/register', async credentails => {
   try {
     const { data } = await axios.post('/users/signup', credentails);
     token.set(data.token);
+    console.log(data);
     return data;
   } catch (error) {
+    alert(
+      'Sorry. A user with that email address already exists, or the email was invalid.',
+    );
     throw error;
   }
 });
