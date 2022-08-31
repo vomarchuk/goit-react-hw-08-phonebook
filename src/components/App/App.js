@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PrivateRoute from '../PrivateRoute';
 import PublicRoute from '../PublicRoute';
 
+import Wrapper from '../Wrapper';
 import Section from '../Section';
 import NavBar from '../NavBar';
 import authOperations from '../../redux/auth/auth-operations';
@@ -25,7 +26,7 @@ const App = () => {
   }, [dispatch]);
   return (
     !isFechingCurrent && (
-      <>
+      <Wrapper>
         <Section>
           <NavBar />
         </Section>
@@ -51,7 +52,7 @@ const App = () => {
             </Switch>
           </Section>
         </Suspense>
-      </>
+      </Wrapper>
     )
   );
 };

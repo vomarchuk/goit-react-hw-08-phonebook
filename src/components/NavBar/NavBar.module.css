@@ -1,6 +1,5 @@
 .nav_bar {
   display: flex;
-  margin-top: 20px;
   padding: 10px 20px;
   justify-content: space-between;
   align-items: center;
@@ -31,6 +30,7 @@
 
 .logOutBtn {
   display: flex;
+  margin-left: 10px;
   align-items: center;
   padding: 5px;
   border-radius: 50%;
